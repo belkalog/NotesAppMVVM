@@ -5,7 +5,7 @@ import androidx.navigation.NavHostController
 
 //  Composable  - составной
 @Composable
-fun Note(navController: NavHostController) {
+fun NoteScreen(navController: NavHostController) {
 
 
 
