@@ -1,20 +1,28 @@
 package team.diamond.notesmvvm.screens
 
+import android.app.Application
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import team.diamond.notesmvvm.MainViewModel
+import team.diamond.notesmvvm.MainViewModelFactory
+import team.diamond.notesmvvm.model.Note
 import team.diamond.notesmvvm.navigation.NavRoute
 import team.diamond.notesmvvm.ui.theme.NotesMVVMTheme
 
@@ -22,7 +30,14 @@ import team.diamond.notesmvvm.ui.theme.NotesMVVMTheme
 //  Composable  - составной
     @Composable
     fun MainScreen(navController: NavHostController) {
-        Text(text = "Main screen")
+
+    val contex = LocalContext.current
+    val  mViewModel: MainViewModel =
+        viewModel(factory = MainViewModelFactory(contex.applicationContext as Application))
+
+    val notes = mViewModel.readTest.observeAsState(listOf()).value
+
+//        Text(text = "Main screen")
 
         Scaffold (
             floatingActionButton = {
@@ -37,18 +52,23 @@ import team.diamond.notesmvvm.ui.theme.NotesMVVMTheme
                 }
             }
         ){
-            Column() {
-                NoteItem(title = "Note 1", subtitle = "Subtitle for note 1",navController = navController )
-                NoteItem(title = "Note 2", subtitle = "Subtitle for note 2",navController = navController )
-                NoteItem(title = "Note 3", subtitle = "Subtitle for note 3",navController = navController )
-                NoteItem(title = "Note 4", subtitle = "Subtitle for note 4",navController = navController )
+//            Column() {
+//                NoteItem(title = "Note 1", subtitle = "Subtitle for note 1",navController = navController )
+//                NoteItem(title = "Note 2", subtitle = "Subtitle for note 2",navController = navController )
+//                NoteItem(title = "Note 3", subtitle = "Subtitle for note 3",navController = navController )
+//                NoteItem(title = "Note 4", subtitle = "Subtitle for note 4",navController = navController )
+//            }
+            LazyColumn{
+                item (notes) { note --
+                    NoteItem(note = note, navController = navController)
+                }
             }
         }
     }
 
 
 @Composable  //аннатация  Composable - Составной
-fun NoteItem (title:String, subtitle:String, navController:NavHostController){
+fun NoteItem (note: Note, navController:NavHostController){
     //карта
     Card(
         modifier = Modifier
@@ -65,11 +85,11 @@ fun NoteItem (title:String, subtitle:String, navController:NavHostController){
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = title,
+                text = note.title,
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold
             )
-            Text(text = subtitle)
+            Text(text = note.subtitle)
         }
 
     }

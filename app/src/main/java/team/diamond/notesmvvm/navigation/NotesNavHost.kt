@@ -15,6 +15,10 @@ sealed class NavRoute(val route: String){//запечатаный class
 }
 // создали класс с ссылками грубо говоря  конец
 
+
+
+
+
 @Composable
 fun NotesNavHost (){
         val navController = rememberNavController()
