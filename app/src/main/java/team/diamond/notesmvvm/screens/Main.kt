@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -59,7 +60,7 @@ import team.diamond.notesmvvm.ui.theme.NotesMVVMTheme
 //                NoteItem(title = "Note 4", subtitle = "Subtitle for note 4",navController = navController )
 //            }
             LazyColumn{
-                item (notes) { note --
+                items (notes) { note ->
                     NoteItem(note = note, navController = navController)
                 }
             }

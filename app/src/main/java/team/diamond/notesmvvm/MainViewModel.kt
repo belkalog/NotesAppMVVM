@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import team.diamond.notesmvvm.model.Note
+import team.diamond.notesmvvm.utils.TYPE_FIREBASE
 import team.diamond.notesmvvm.utils.TYPE_ROOM
 
 
@@ -25,7 +26,7 @@ class MainViewModel (application: Application):AndroidViewModel(application) {
         readTest.value =
             when(dbType.value){
                 //  как рисовать стрелки ?
-                TYPE_ROOM -- {
+                TYPE_ROOM -> {
                     listOf<Note>(
                    Note(title = "Note 1", subtitle = "Subtitle for note 1"),
                    Note(title = "Note 2", subtitle = "Subtitle for note 2"),
@@ -33,8 +34,8 @@ class MainViewModel (application: Application):AndroidViewModel(application) {
                    Note(title = "Note 4", subtitle = "Subtitle for note 4"),
                     )
                 }
-                TYPE_FIREBASE-- listOf()
-                else -- listOf()
+                TYPE_FIREBASE-> listOf()
+                else -> listOf()
             }
     }
 
